@@ -1,0 +1,16 @@
+from "../mongo.du" import MongoDriver;
+var client = MongoDriver.createClient("mongodb://r420/discord-data");
+var coll = client.collection("discord-data", "messages");
+print(coll);
+const q = {"$or": [{"content": "i love you"}, {"content": "i hate you"}]};
+const result = coll.find(q).limit(5).project({"content": 1, "id":1, "user":1}).skip(5).toArray();
+//const result = coll.findOne(q, {"project": {"content": 1, "id": 1}});
+result.forEach(def (value) => {
+    print(value);
+});
+
+//print(result);
+//while (cursor.hasNext()){
+//  const out = cursor.next();
+//  print(out);
+//}
