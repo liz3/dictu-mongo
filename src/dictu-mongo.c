@@ -295,7 +295,7 @@ static Value dictuMongoCursorToArray(DictuVM *vm, int argCount, Value *args) {
   ObjList *list = newList(vm);
   push(vm, OBJ_VAL(list));
   bson_t *doc;
-  while (mongoc_cursor_next(c->cursor, &doc)) {
+  while (mongoc_cursor_next(c->cursor, (const bson_t**)&doc)) {
     Value v = parse_bson_to_dictu(vm, doc, false);
     writeValueArray(vm, &list->values, v);
   }
@@ -338,7 +338,7 @@ static Value dictuMongoCursorHasNext(DictuVM *vm, int argCount, Value *args) {
   if (c->done)
     return BOOL_VAL(false);
   dictu_mongo_init_start_find(vm, c);
-  bool out = mongoc_cursor_next(c->cursor, &(c->out));
+  bool out = mongoc_cursor_next(c->cursor, (const bson_t**)&(c->out));
   c->done = !out;
   return BOOL_VAL(out);
 }
@@ -366,7 +366,7 @@ static Value dictuMongoCursorNext(DictuVM *vm, int argCount, Value *args) {
     return BOOL_VAL(false);
   dictu_mongo_init_start_find(vm, c);
   if (c->out == NULL)
-    mongoc_cursor_next(c->cursor, &(c->out));
+    mongoc_cursor_next(c->cursor, (const bson_t**)&(c->out));
   if (c->out == NULL)
     return NIL_VAL;
   return parse_bson_to_dictu(vm, c->out, false);
@@ -477,7 +477,7 @@ static Value dictuMongoFindOne(DictuVM *vm, int argCount, Value *args) {
     }
   }
   dictu_mongo_init_start_find(vm, &cursor);
-  bool out = mongoc_cursor_next(cursor.cursor, &(cursor.out));
+  bool out = mongoc_cursor_next(cursor.cursor, (const bson_t**)&(cursor.out));
   Value res;
   if(!out)
     res=  BOOL_VAL(false);
