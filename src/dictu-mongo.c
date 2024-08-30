@@ -512,7 +512,7 @@ static Value dictuMongoInsertMany(DictuVM *vm, int argCount, Value *args) {
 
   bson_error_t error;
   bool res = mongoc_collection_insert_many(
-      client->collection, &docs, list->values.count, NULL, NULL, &error);
+      client->collection, (const bson_t**)&docs, list->values.count, NULL, NULL, &error);
   FREE_ARRAY(vm, bson_t, docs, list->values.count);
   return BOOL_VAL(res);
 }
