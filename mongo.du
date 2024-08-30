@@ -8,7 +8,7 @@ def mongo_lib_path() {
  if(System.platform == "linux")
     return "libdictu-mongo.so";
  if(System.platform == "windows")
-    return "Release\libdictu-mongo.dll";
+    return "Release\dictu-mongo.dll";
    return nil;
 }
 const MongoDriver = FFI.load(Path.join([p, "build", mongo_lib_path()]));
