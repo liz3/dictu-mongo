@@ -1,4 +1,4 @@
-from "../mongo.du" import MongoDriver;
+from "../mod.du" import MongoDriver;
 var client = MongoDriver.createClient("mongodb://r420/discord-data");
 var coll = client.collection("discord-data", "messages");
 print(coll);
