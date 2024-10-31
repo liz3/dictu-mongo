@@ -1,6 +1,12 @@
 {
-  "deps": {},
-  "name": "dictu-mongo",
   "version": "0.0.1",
-  "build-cmd": "dictu scripts/build.du"
+  "build-cmd": "dictu scripts/build.du",
+  "name": "dictu-mongo",
+  "deps": {
+    "dictu-example-package": {
+      "version": "0.0.1",
+      "name": "dictu-example-package",
+      "url": "https://github.com/liz3/dictu-example-package"
+    }
+  }
 }
