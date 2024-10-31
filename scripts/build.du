@@ -1,0 +1,11 @@
+import System;
+import Process;
+
+Process.run(["./scripts/{}".format(System.platform == "windows" ? "windows_build.bat" : "unix_build.sh")], true).match(
+def (result) => {
+},
+def (error) => {
+  printError(error);
+  System.exit(1);
+}
+);
